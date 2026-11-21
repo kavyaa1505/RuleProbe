@@ -104,11 +104,13 @@ class OpenAIAdapter:
         self,
         model: str = "gpt-4o-mini",
         api_key: str | None = None,
+        base_url: str | None = None,
         temperature: float = 0.7,
         max_tokens: int = 1024,
     ):
         self.model = model
         self.api_key = api_key or os.environ.get("OPENAI_API_KEY", "")
+        self.base_url = base_url or os.environ.get("OPENAI_BASE_URL")
         self.temperature = temperature
         self.max_tokens = max_tokens
         self._client = None
@@ -117,7 +119,10 @@ class OpenAIAdapter:
         if self._client is None:
             try:
                 from openai import AsyncOpenAI
-                self._client = AsyncOpenAI(api_key=self.api_key)
+                kwargs: dict[str, Any] = {"api_key": self.api_key}
+                if self.base_url:
+                    kwargs["base_url"] = self.base_url
+                self._client = AsyncOpenAI(**kwargs)
             except ImportError:
                 raise RuntimeError("openai package not installed. Run: uv add openai")
         return self._client
@@ -156,7 +161,6 @@ class OpenAIAdapter:
 
         tokens_in = usage.prompt_tokens if usage else 0
         tokens_out = usage.completion_tokens if usage else 0
-        # GPT-4o-mini pricing (approximate)
         cost = (tokens_in * 0.15 + tokens_out * 0.60) / 1_000_000
 
         return AgentResult(
@@ -166,6 +170,148 @@ class OpenAIAdapter:
             cost=cost,
             latency_ms=latency_ms,
         )
+
+
+# ---------------------------------------------------------------------------
+# NVIDIA adapter (OpenAI-compatible)
+# ---------------------------------------------------------------------------
+
+class BudgetExceededError(RuntimeError):
+    """Raised when call or token budget cap is exceeded."""
+    pass
+
+
+class NvidiaAdapter:
+    """
+    Calls NVIDIA OpenAI-compatible endpoint with rate-limiting, retries,
+    jitter, timeout, and hard budget cap.
+    """
+
+    def __init__(
+        self,
+        model: str | None = None,
+        api_key: str | None = None,
+        base_url: str | None = None,
+        temperature: float = 0.6,
+        max_tokens: int = 1024,
+        max_concurrency: int = 3,
+        timeout: float = 60.0,
+        max_retries: int = 5,
+        max_calls: int | None = None,
+        max_total_tokens: int | None = None,
+        cost_per_1m_in: float = 0.70,
+        cost_per_1m_out: float = 0.80,
+    ):
+        self.model = model or os.environ.get("AGENT_MODEL", "nvidia/nemotron-3.5-lightning-30b-a3b")
+        self.api_key = api_key or os.environ.get("NVIDIA_API_KEY", "")
+        self.base_url = base_url or os.environ.get("NVIDIA_BASE_URL", "https://integrate.api.nvidia.com/v1")
+        self.temperature = temperature
+        self.max_tokens = max_tokens
+        self.semaphore = asyncio.Semaphore(max_concurrency)
+        self.timeout = timeout
+        self.max_retries = max_retries
+        self.max_calls = max_calls
+        self.max_total_tokens = max_total_tokens
+        self.cost_per_1m_in = cost_per_1m_in
+        self.cost_per_1m_out = cost_per_1m_out
+
+        self.total_calls = 0
+        self.total_tokens_in = 0
+        self.total_tokens_out = 0
+        self._lock = asyncio.Lock()
+        self._client = None
+
+    def _get_client(self):
+        if self._client is None:
+            from openai import AsyncOpenAI
+            self._client = AsyncOpenAI(
+                api_key=self.api_key,
+                base_url=self.base_url,
+                timeout=self.timeout,
+            )
+        return self._client
+
+    async def run(
+        self,
+        instructions: str,
+        scenario_input: Any,
+        *,
+        seed: int | None = None,  # accepted for interface parity, but not relied on
+    ) -> AgentResult:
+        # Check hard budget cap before executing
+        async with self._lock:
+            if self.max_calls is not None and self.total_calls >= self.max_calls:
+                raise BudgetExceededError(f"Hard budget cap exceeded: max calls ({self.max_calls}) reached")
+            total_toks = self.total_tokens_in + self.total_tokens_out
+            if self.max_total_tokens is not None and total_toks >= self.max_total_tokens:
+                raise BudgetExceededError(f"Hard budget cap exceeded: max tokens ({self.max_total_tokens}) reached")
+
+        client = self._get_client()
+        input_str = str(scenario_input)
+
+        # Single system message containing all instructions
+        messages = [
+            {"role": "system", "content": instructions},
+            {"role": "user", "content": input_str},
+        ]
+
+        kwargs: dict[str, Any] = {
+            "model": self.model,
+            "messages": messages,
+            "temperature": self.temperature,
+            "max_tokens": self.max_tokens,
+        }
+
+        last_err: Exception | None = None
+        for attempt in range(self.max_retries + 1):
+            try:
+                async with self.semaphore:
+                    t0 = time.perf_counter()
+                    response = await asyncio.wait_for(
+                        client.chat.completions.create(**kwargs),
+                        timeout=self.timeout,
+                    )
+                    latency_ms = (time.perf_counter() - t0) * 1000
+
+                choice = response.choices[0]
+                output = choice.message.content or ""
+                usage = response.usage
+
+                tokens_in = usage.prompt_tokens if usage else len(instructions.split())
+                tokens_out = usage.completion_tokens if usage else len(output.split())
+                cost = (tokens_in * self.cost_per_1m_in + tokens_out * self.cost_per_1m_out) / 1_000_000
+
+                async with self._lock:
+                    self.total_calls += 1
+                    self.total_tokens_in += tokens_in
+                    self.total_tokens_out += tokens_out
+
+                return AgentResult(
+                    output=output,
+                    tokens_in=tokens_in,
+                    tokens_out=tokens_out,
+                    cost=cost,
+                    latency_ms=latency_ms,
+                )
+
+            except Exception as e:
+                last_err = e
+                # Check status code for 429 / 5xx or timeout
+                status_code = getattr(e, "status_code", None)
+                is_retryable = (
+                    status_code in (429, 500, 502, 503, 504)
+                    or isinstance(e, (asyncio.TimeoutError, TimeoutError))
+                    or "rate" in str(e).lower()
+                    or "timeout" in str(e).lower()
+                )
+                if attempt < self.max_retries and is_retryable:
+                    # Exponential backoff with jitter
+                    backoff = (2 ** attempt) + random.uniform(0.1, 1.0)
+                    await asyncio.sleep(backoff)
+                else:
+                    raise e
+
+        raise last_err or RuntimeError("Max retries exceeded")
 
 
 # ---------------------------------------------------------------------------
@@ -240,6 +386,7 @@ def get_adapter(name: str, **kwargs) -> AgentAdapter:
     adapters = {
         "mock": MockAdapter,
         "openai": OpenAIAdapter,
+        "nvidia": NvidiaAdapter,
         "anthropic": AnthropicAdapter,
         "benchmark": BenchmarkAdapter,
     }
