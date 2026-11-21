@@ -1,0 +1,1289 @@
+{
+  "sweep": {
+    "small": {
+      "N_3": {
+        "n_runs": 3,
+        "effect_size": "small",
+        "n_experiments": 200,
+        "macro_precision": 0.2923,
+        "macro_recall": 0.45,
+        "macro_f1": 0.3364,
+        "classes": {
+          "load_bearing": {
+            "tp": 0,
+            "fp": 0,
+            "fn": 200,
+            "precision": 0.0,
+            "precision_95ci": [
+              0.0,
+              0.0
+            ],
+            "recall": 0.0,
+            "recall_95ci": [
+              0.0,
+              0.0188
+            ],
+            "f1": 0.0
+          },
+          "redundant": {
+            "tp": 179,
+            "fp": 490,
+            "fn": 21,
+            "precision": 0.2676,
+            "precision_95ci": [
+              0.2354,
+              0.3024
+            ],
+            "recall": 0.895,
+            "recall_95ci": [
+              0.8448,
+              0.9303
+            ],
+            "f1": 0.412
+          },
+          "ignored": {
+            "tp": 161,
+            "fp": 170,
+            "fn": 39,
+            "precision": 0.4864,
+            "precision_95ci": [
+              0.433,
+              0.5401
+            ],
+            "recall": 0.805,
+            "recall_95ci": [
+              0.7446,
+              0.8539
+            ],
+            "f1": 0.6064
+          },
+          "harmful": {
+            "tp": 0,
+            "fp": 0,
+            "fn": 200,
+            "precision": 0.0,
+            "precision_95ci": [
+              0.0,
+              0.0
+            ],
+            "recall": 0.0,
+            "recall_95ci": [
+              0.0,
+              0.0188
+            ],
+            "f1": 0.0
+          },
+          "order_sensitive": {
+            "tp": 0,
+            "fp": 0,
+            "fn": 200,
+            "precision": 0.0,
+            "precision_95ci": [
+              0.0,
+              0.0
+            ],
+            "recall": 0.0,
+            "recall_95ci": [
+              0.0,
+              0.0188
+            ],
+            "f1": 0.0
+          },
+          "untested": {
+            "tp": 200,
+            "fp": 0,
+            "fn": 0,
+            "precision": 1.0,
+            "precision_95ci": [
+              0.9812,
+              1.0
+            ],
+            "recall": 1.0,
+            "recall_95ci": [
+              0.9812,
+              1.0
+            ],
+            "f1": 1.0
+          }
+        }
+      },
+      "N_5": {
+        "n_runs": 5,
+        "effect_size": "small",
+        "n_experiments": 200,
+        "macro_precision": 0.3006,
+        "macro_recall": 0.4583,
+        "macro_f1": 0.3445,
+        "classes": {
+          "load_bearing": {
+            "tp": 0,
+            "fp": 0,
+            "fn": 200,
+            "precision": 0.0,
+            "precision_95ci": [
+              0.0,
+              0.0
+            ],
+            "recall": 0.0,
+            "recall_95ci": [
+              0.0,
+              0.0188
+            ],
+            "f1": 0.0
+          },
+          "redundant": {
+            "tp": 181,
+            "fp": 506,
+            "fn": 19,
+            "precision": 0.2635,
+            "precision_95ci": [
+              0.2319,
+              0.2977
+            ],
+            "recall": 0.905,
+            "recall_95ci": [
+              0.8564,
+              0.9383
+            ],
+            "f1": 0.4081
+          },
+          "ignored": {
+            "tp": 169,
+            "fp": 144,
+            "fn": 31,
+            "precision": 0.5399,
+            "precision_95ci": [
+              0.4846,
+              0.5943
+            ],
+            "recall": 0.845,
+            "recall_95ci": [
+              0.7884,
+              0.8886
+            ],
+            "f1": 0.6589
+          },
+          "harmful": {
+            "tp": 0,
+            "fp": 0,
+            "fn": 200,
+            "precision": 0.0,
+            "precision_95ci": [
+              0.0,
+              0.0
+            ],
+            "recall": 0.0,
+            "recall_95ci": [
+              0.0,
+              0.0188
+            ],
+            "f1": 0.0
+          },
+          "order_sensitive": {
+            "tp": 0,
+            "fp": 0,
+            "fn": 200,
+            "precision": 0.0,
+            "precision_95ci": [
+              0.0,
+              0.0
+            ],
+            "recall": 0.0,
+            "recall_95ci": [
+              0.0,
+              0.0188
+            ],
+            "f1": 0.0
+          },
+          "untested": {
+            "tp": 200,
+            "fp": 0,
+            "fn": 0,
+            "precision": 1.0,
+            "precision_95ci": [
+              0.9812,
+              1.0
+            ],
+            "recall": 1.0,
+            "recall_95ci": [
+              0.9812,
+              1.0
+            ],
+            "f1": 1.0
+          }
+        }
+      },
+      "N_10": {
+        "n_runs": 10,
+        "effect_size": "small",
+        "n_experiments": 200,
+        "macro_precision": 0.7288,
+        "macro_recall": 0.5033,
+        "macro_f1": 0.4042,
+        "classes": {
+          "load_bearing": {
+            "tp": 9,
+            "fp": 1,
+            "fn": 191,
+            "precision": 0.9,
+            "precision_95ci": [
+              0.5959,
+              0.9821
+            ],
+            "recall": 0.045,
+            "recall_95ci": [
+              0.0239,
+              0.0833
+            ],
+            "f1": 0.0857
+          },
+          "redundant": {
+            "tp": 190,
+            "fp": 458,
+            "fn": 10,
+            "precision": 0.2932,
+            "precision_95ci": [
+              0.2595,
+              0.3294
+            ],
+            "recall": 0.95,
+            "recall_95ci": [
+              0.9104,
+              0.9726
+            ],
+            "f1": 0.4481
+          },
+          "ignored": {
+            "tp": 186,
+            "fp": 135,
+            "fn": 14,
+            "precision": 0.5794,
+            "precision_95ci": [
+              0.5248,
+              0.6322
+            ],
+            "recall": 0.93,
+            "recall_95ci": [
+              0.8859,
+              0.9578
+            ],
+            "f1": 0.714
+          },
+          "harmful": {
+            "tp": 3,
+            "fp": 2,
+            "fn": 197,
+            "precision": 0.6,
+            "precision_95ci": [
+              0.2307,
+              0.8824
+            ],
+            "recall": 0.015,
+            "recall_95ci": [
+              0.0051,
+              0.0432
+            ],
+            "f1": 0.0293
+          },
+          "order_sensitive": {
+            "tp": 16,
+            "fp": 0,
+            "fn": 184,
+            "precision": 1.0,
+            "precision_95ci": [
+              0.8064,
+              1.0
+            ],
+            "recall": 0.08,
+            "recall_95ci": [
+              0.0498,
+              0.126
+            ],
+            "f1": 0.1481
+          },
+          "untested": {
+            "tp": 200,
+            "fp": 0,
+            "fn": 0,
+            "precision": 1.0,
+            "precision_95ci": [
+              0.9812,
+              1.0
+            ],
+            "recall": 1.0,
+            "recall_95ci": [
+              0.9812,
+              1.0
+            ],
+            "f1": 1.0
+          }
+        }
+      },
+      "N_20": {
+        "n_runs": 20,
+        "effect_size": "small",
+        "n_experiments": 200,
+        "macro_precision": 0.8202,
+        "macro_recall": 0.5075,
+        "macro_f1": 0.3965,
+        "classes": {
+          "load_bearing": {
+            "tp": 4,
+            "fp": 0,
+            "fn": 196,
+            "precision": 1.0,
+            "precision_95ci": [
+              0.5101,
+              1.0
+            ],
+            "recall": 0.02,
+            "recall_95ci": [
+              0.0078,
+              0.0503
+            ],
+            "f1": 0.0392
+          },
+          "redundant": {
+            "tp": 200,
+            "fp": 476,
+            "fn": 0,
+            "precision": 0.2959,
+            "precision_95ci": [
+              0.2627,
+              0.3313
+            ],
+            "recall": 1.0,
+            "recall_95ci": [
+              0.9812,
+              1.0
+            ],
+            "f1": 0.4566
+          },
+          "ignored": {
+            "tp": 192,
+            "fp": 115,
+            "fn": 8,
+            "precision": 0.6254,
+            "precision_95ci": [
+              0.57,
+              0.6777
+            ],
+            "recall": 0.96,
+            "recall_95ci": [
+              0.9231,
+              0.9796
+            ],
+            "f1": 0.7574
+          },
+          "harmful": {
+            "tp": 6,
+            "fp": 0,
+            "fn": 194,
+            "precision": 1.0,
+            "precision_95ci": [
+              0.6097,
+              1.0
+            ],
+            "recall": 0.03,
+            "recall_95ci": [
+              0.0138,
+              0.0639
+            ],
+            "f1": 0.0583
+          },
+          "order_sensitive": {
+            "tp": 7,
+            "fp": 0,
+            "fn": 193,
+            "precision": 1.0,
+            "precision_95ci": [
+              0.6457,
+              1.0
+            ],
+            "recall": 0.035,
+            "recall_95ci": [
+              0.0171,
+              0.0705
+            ],
+            "f1": 0.0676
+          },
+          "untested": {
+            "tp": 200,
+            "fp": 0,
+            "fn": 0,
+            "precision": 1.0,
+            "precision_95ci": [
+              0.9812,
+              1.0
+            ],
+            "recall": 1.0,
+            "recall_95ci": [
+              0.9812,
+              1.0
+            ],
+            "f1": 1.0
+          }
+        }
+      }
+    },
+    "medium": {
+      "N_3": {
+        "n_runs": 3,
+        "effect_size": "medium",
+        "n_experiments": 200,
+        "macro_precision": 0.2878,
+        "macro_recall": 0.4517,
+        "macro_f1": 0.3341,
+        "classes": {
+          "load_bearing": {
+            "tp": 0,
+            "fp": 0,
+            "fn": 200,
+            "precision": 0.0,
+            "precision_95ci": [
+              0.0,
+              0.0
+            ],
+            "recall": 0.0,
+            "recall_95ci": [
+              0.0,
+              0.0188
+            ],
+            "f1": 0.0
+          },
+          "redundant": {
+            "tp": 179,
+            "fp": 454,
+            "fn": 21,
+            "precision": 0.2828,
+            "precision_95ci": [
+              0.2491,
+              0.3191
+            ],
+            "recall": 0.895,
+            "recall_95ci": [
+              0.8448,
+              0.9303
+            ],
+            "f1": 0.4298
+          },
+          "ignored": {
+            "tp": 163,
+            "fp": 204,
+            "fn": 37,
+            "precision": 0.4441,
+            "precision_95ci": [
+              0.3941,
+              0.4953
+            ],
+            "recall": 0.815,
+            "recall_95ci": [
+              0.7554,
+              0.8627
+            ],
+            "f1": 0.575
+          },
+          "harmful": {
+            "tp": 0,
+            "fp": 0,
+            "fn": 200,
+            "precision": 0.0,
+            "precision_95ci": [
+              0.0,
+              0.0
+            ],
+            "recall": 0.0,
+            "recall_95ci": [
+              0.0,
+              0.0188
+            ],
+            "f1": 0.0
+          },
+          "order_sensitive": {
+            "tp": 0,
+            "fp": 0,
+            "fn": 200,
+            "precision": 0.0,
+            "precision_95ci": [
+              0.0,
+              0.0
+            ],
+            "recall": 0.0,
+            "recall_95ci": [
+              0.0,
+              0.0188
+            ],
+            "f1": 0.0
+          },
+          "untested": {
+            "tp": 200,
+            "fp": 0,
+            "fn": 0,
+            "precision": 1.0,
+            "precision_95ci": [
+              0.9812,
+              1.0
+            ],
+            "recall": 1.0,
+            "recall_95ci": [
+              0.9812,
+              1.0
+            ],
+            "f1": 1.0
+          }
+        }
+      },
+      "N_5": {
+        "n_runs": 5,
+        "effect_size": "medium",
+        "n_experiments": 200,
+        "macro_precision": 0.5472,
+        "macro_recall": 0.4742,
+        "macro_f1": 0.3504,
+        "classes": {
+          "load_bearing": {
+            "tp": 1,
+            "fp": 1,
+            "fn": 199,
+            "precision": 0.5,
+            "precision_95ci": [
+              0.0945,
+              0.9055
+            ],
+            "recall": 0.005,
+            "recall_95ci": [
+              0.0009,
+              0.0278
+            ],
+            "f1": 0.0099
+          },
+          "redundant": {
+            "tp": 187,
+            "fp": 438,
+            "fn": 13,
+            "precision": 0.2992,
+            "precision_95ci": [
+              0.2646,
+              0.3362
+            ],
+            "recall": 0.935,
+            "recall_95ci": [
+              0.892,
+              0.9616
+            ],
+            "f1": 0.4533
+          },
+          "ignored": {
+            "tp": 180,
+            "fp": 192,
+            "fn": 20,
+            "precision": 0.4839,
+            "precision_95ci": [
+              0.4335,
+              0.5346
+            ],
+            "recall": 0.9,
+            "recall_95ci": [
+              0.8506,
+              0.9343
+            ],
+            "f1": 0.6294
+          },
+          "harmful": {
+            "tp": 1,
+            "fp": 0,
+            "fn": 199,
+            "precision": 1.0,
+            "precision_95ci": [
+              0.2065,
+              1.0
+            ],
+            "recall": 0.005,
+            "recall_95ci": [
+              0.0009,
+              0.0278
+            ],
+            "f1": 0.01
+          },
+          "order_sensitive": {
+            "tp": 0,
+            "fp": 0,
+            "fn": 200,
+            "precision": 0.0,
+            "precision_95ci": [
+              0.0,
+              0.0
+            ],
+            "recall": 0.0,
+            "recall_95ci": [
+              0.0,
+              0.0188
+            ],
+            "f1": 0.0
+          },
+          "untested": {
+            "tp": 200,
+            "fp": 0,
+            "fn": 0,
+            "precision": 1.0,
+            "precision_95ci": [
+              0.9812,
+              1.0
+            ],
+            "recall": 1.0,
+            "recall_95ci": [
+              0.9812,
+              1.0
+            ],
+            "f1": 1.0
+          }
+        }
+      },
+      "N_10": {
+        "n_runs": 10,
+        "effect_size": "medium",
+        "n_experiments": 200,
+        "macro_precision": 0.8123,
+        "macro_recall": 0.5933,
+        "macro_f1": 0.5472,
+        "classes": {
+          "load_bearing": {
+            "tp": 47,
+            "fp": 3,
+            "fn": 153,
+            "precision": 0.94,
+            "precision_95ci": [
+              0.8378,
+              0.9794
+            ],
+            "recall": 0.235,
+            "recall_95ci": [
+              0.1816,
+              0.2984
+            ],
+            "f1": 0.376
+          },
+          "redundant": {
+            "tp": 197,
+            "fp": 342,
+            "fn": 3,
+            "precision": 0.3655,
+            "precision_95ci": [
+              0.3259,
+              0.407
+            ],
+            "recall": 0.985,
+            "recall_95ci": [
+              0.9568,
+              0.9949
+            ],
+            "f1": 0.5332
+          },
+          "ignored": {
+            "tp": 188,
+            "fp": 143,
+            "fn": 12,
+            "precision": 0.568,
+            "precision_95ci": [
+              0.5141,
+              0.6203
+            ],
+            "recall": 0.94,
+            "recall_95ci": [
+              0.8981,
+              0.9653
+            ],
+            "f1": 0.7081
+          },
+          "harmful": {
+            "tp": 44,
+            "fp": 0,
+            "fn": 156,
+            "precision": 1.0,
+            "precision_95ci": [
+              0.9197,
+              1.0
+            ],
+            "recall": 0.22,
+            "recall_95ci": [
+              0.1682,
+              0.2824
+            ],
+            "f1": 0.3607
+          },
+          "order_sensitive": {
+            "tp": 36,
+            "fp": 0,
+            "fn": 164,
+            "precision": 1.0,
+            "precision_95ci": [
+              0.9036,
+              1.0
+            ],
+            "recall": 0.18,
+            "recall_95ci": [
+              0.1329,
+              0.2391
+            ],
+            "f1": 0.3051
+          },
+          "untested": {
+            "tp": 200,
+            "fp": 0,
+            "fn": 0,
+            "precision": 1.0,
+            "precision_95ci": [
+              0.9812,
+              1.0
+            ],
+            "recall": 1.0,
+            "recall_95ci": [
+              0.9812,
+              1.0
+            ],
+            "f1": 1.0
+          }
+        }
+      },
+      "N_20": {
+        "n_runs": 20,
+        "effect_size": "medium",
+        "n_experiments": 200,
+        "macro_precision": 0.8265,
+        "macro_recall": 0.61,
+        "macro_f1": 0.562,
+        "classes": {
+          "load_bearing": {
+            "tp": 46,
+            "fp": 0,
+            "fn": 154,
+            "precision": 1.0,
+            "precision_95ci": [
+              0.9229,
+              1.0
+            ],
+            "recall": 0.23,
+            "recall_95ci": [
+              0.1771,
+              0.2931
+            ],
+            "f1": 0.374
+          },
+          "redundant": {
+            "tp": 200,
+            "fp": 321,
+            "fn": 0,
+            "precision": 0.3839,
+            "precision_95ci": [
+              0.3431,
+              0.4263
+            ],
+            "recall": 1.0,
+            "recall_95ci": [
+              0.9812,
+              1.0
+            ],
+            "f1": 0.5548
+          },
+          "ignored": {
+            "tp": 199,
+            "fp": 147,
+            "fn": 1,
+            "precision": 0.5751,
+            "precision_95ci": [
+              0.5225,
+              0.6261
+            ],
+            "recall": 0.995,
+            "recall_95ci": [
+              0.9722,
+              0.9991
+            ],
+            "f1": 0.7289
+          },
+          "harmful": {
+            "tp": 42,
+            "fp": 0,
+            "fn": 158,
+            "precision": 1.0,
+            "precision_95ci": [
+              0.9162,
+              1.0
+            ],
+            "recall": 0.21,
+            "recall_95ci": [
+              0.1593,
+              0.2716
+            ],
+            "f1": 0.3471
+          },
+          "order_sensitive": {
+            "tp": 45,
+            "fp": 0,
+            "fn": 155,
+            "precision": 1.0,
+            "precision_95ci": [
+              0.9213,
+              1.0
+            ],
+            "recall": 0.225,
+            "recall_95ci": [
+              0.1726,
+              0.2877
+            ],
+            "f1": 0.3673
+          },
+          "untested": {
+            "tp": 200,
+            "fp": 0,
+            "fn": 0,
+            "precision": 1.0,
+            "precision_95ci": [
+              0.9812,
+              1.0
+            ],
+            "recall": 1.0,
+            "recall_95ci": [
+              0.9812,
+              1.0
+            ],
+            "f1": 1.0
+          }
+        }
+      }
+    },
+    "large": {
+      "N_3": {
+        "n_runs": 3,
+        "effect_size": "large",
+        "n_experiments": 200,
+        "macro_precision": 0.2961,
+        "macro_recall": 0.4742,
+        "macro_f1": 0.3469,
+        "classes": {
+          "load_bearing": {
+            "tp": 0,
+            "fp": 0,
+            "fn": 200,
+            "precision": 0.0,
+            "precision_95ci": [
+              0.0,
+              0.0
+            ],
+            "recall": 0.0,
+            "recall_95ci": [
+              0.0,
+              0.0188
+            ],
+            "f1": 0.0
+          },
+          "redundant": {
+            "tp": 187,
+            "fp": 428,
+            "fn": 13,
+            "precision": 0.3041,
+            "precision_95ci": [
+              0.269,
+              0.3415
+            ],
+            "recall": 0.935,
+            "recall_95ci": [
+              0.892,
+              0.9616
+            ],
+            "f1": 0.4589
+          },
+          "ignored": {
+            "tp": 182,
+            "fp": 203,
+            "fn": 18,
+            "precision": 0.4727,
+            "precision_95ci": [
+              0.4234,
+              0.5226
+            ],
+            "recall": 0.91,
+            "recall_95ci": [
+              0.8622,
+              0.9423
+            ],
+            "f1": 0.6222
+          },
+          "harmful": {
+            "tp": 0,
+            "fp": 0,
+            "fn": 200,
+            "precision": 0.0,
+            "precision_95ci": [
+              0.0,
+              0.0
+            ],
+            "recall": 0.0,
+            "recall_95ci": [
+              0.0,
+              0.0188
+            ],
+            "f1": 0.0
+          },
+          "order_sensitive": {
+            "tp": 0,
+            "fp": 0,
+            "fn": 200,
+            "precision": 0.0,
+            "precision_95ci": [
+              0.0,
+              0.0
+            ],
+            "recall": 0.0,
+            "recall_95ci": [
+              0.0,
+              0.0188
+            ],
+            "f1": 0.0
+          },
+          "untested": {
+            "tp": 200,
+            "fp": 0,
+            "fn": 0,
+            "precision": 1.0,
+            "precision_95ci": [
+              0.9812,
+              1.0
+            ],
+            "recall": 1.0,
+            "recall_95ci": [
+              0.9812,
+              1.0
+            ],
+            "f1": 1.0
+          }
+        }
+      },
+      "N_5": {
+        "n_runs": 5,
+        "effect_size": "large",
+        "n_experiments": 200,
+        "macro_precision": 0.8075,
+        "macro_recall": 0.5583,
+        "macro_f1": 0.4902,
+        "classes": {
+          "load_bearing": {
+            "tp": 33,
+            "fp": 1,
+            "fn": 167,
+            "precision": 0.9706,
+            "precision_95ci": [
+              0.8508,
+              0.9948
+            ],
+            "recall": 0.165,
+            "recall_95ci": [
+              0.12,
+              0.2227
+            ],
+            "f1": 0.2821
+          },
+          "redundant": {
+            "tp": 194,
+            "fp": 354,
+            "fn": 6,
+            "precision": 0.354,
+            "precision_95ci": [
+              0.3151,
+              0.3949
+            ],
+            "recall": 0.97,
+            "recall_95ci": [
+              0.9361,
+              0.9862
+            ],
+            "f1": 0.5187
+          },
+          "ignored": {
+            "tp": 190,
+            "fp": 175,
+            "fn": 10,
+            "precision": 0.5205,
+            "precision_95ci": [
+              0.4693,
+              0.5713
+            ],
+            "recall": 0.95,
+            "recall_95ci": [
+              0.9104,
+              0.9726
+            ],
+            "f1": 0.6726
+          },
+          "harmful": {
+            "tp": 24,
+            "fp": 0,
+            "fn": 176,
+            "precision": 1.0,
+            "precision_95ci": [
+              0.862,
+              1.0
+            ],
+            "recall": 0.12,
+            "recall_95ci": [
+              0.082,
+              0.1723
+            ],
+            "f1": 0.2143
+          },
+          "order_sensitive": {
+            "tp": 29,
+            "fp": 0,
+            "fn": 171,
+            "precision": 1.0,
+            "precision_95ci": [
+              0.883,
+              1.0
+            ],
+            "recall": 0.145,
+            "recall_95ci": [
+              0.1029,
+              0.2005
+            ],
+            "f1": 0.2533
+          },
+          "untested": {
+            "tp": 200,
+            "fp": 0,
+            "fn": 0,
+            "precision": 1.0,
+            "precision_95ci": [
+              0.9812,
+              1.0
+            ],
+            "recall": 1.0,
+            "recall_95ci": [
+              0.9812,
+              1.0
+            ],
+            "f1": 1.0
+          }
+        }
+      },
+      "N_10": {
+        "n_runs": 10,
+        "effect_size": "large",
+        "n_experiments": 200,
+        "macro_precision": 0.9433,
+        "macro_recall": 0.9317,
+        "macro_f1": 0.932,
+        "classes": {
+          "load_bearing": {
+            "tp": 186,
+            "fp": 0,
+            "fn": 14,
+            "precision": 1.0,
+            "precision_95ci": [
+              0.9798,
+              1.0
+            ],
+            "recall": 0.93,
+            "recall_95ci": [
+              0.8859,
+              0.9578
+            ],
+            "f1": 0.9637
+          },
+          "redundant": {
+            "tp": 200,
+            "fp": 44,
+            "fn": 0,
+            "precision": 0.8197,
+            "precision_95ci": [
+              0.7666,
+              0.8628
+            ],
+            "recall": 1.0,
+            "recall_95ci": [
+              0.9812,
+              1.0
+            ],
+            "f1": 0.9009
+          },
+          "ignored": {
+            "tp": 200,
+            "fp": 38,
+            "fn": 0,
+            "precision": 0.8403,
+            "precision_95ci": [
+              0.7884,
+              0.8814
+            ],
+            "recall": 1.0,
+            "recall_95ci": [
+              0.9812,
+              1.0
+            ],
+            "f1": 0.9132
+          },
+          "harmful": {
+            "tp": 162,
+            "fp": 0,
+            "fn": 38,
+            "precision": 1.0,
+            "precision_95ci": [
+              0.9768,
+              1.0
+            ],
+            "recall": 0.81,
+            "recall_95ci": [
+              0.75,
+              0.8583
+            ],
+            "f1": 0.895
+          },
+          "order_sensitive": {
+            "tp": 170,
+            "fp": 0,
+            "fn": 30,
+            "precision": 1.0,
+            "precision_95ci": [
+              0.9779,
+              1.0
+            ],
+            "recall": 0.85,
+            "recall_95ci": [
+              0.7939,
+              0.8929
+            ],
+            "f1": 0.9189
+          },
+          "untested": {
+            "tp": 200,
+            "fp": 0,
+            "fn": 0,
+            "precision": 1.0,
+            "precision_95ci": [
+              0.9812,
+              1.0
+            ],
+            "recall": 1.0,
+            "recall_95ci": [
+              0.9812,
+              1.0
+            ],
+            "f1": 1.0
+          }
+        }
+      },
+      "N_20": {
+        "n_runs": 20,
+        "effect_size": "large",
+        "n_experiments": 200,
+        "macro_precision": 0.9896,
+        "macro_recall": 0.9892,
+        "macro_f1": 0.9892,
+        "classes": {
+          "load_bearing": {
+            "tp": 200,
+            "fp": 0,
+            "fn": 0,
+            "precision": 1.0,
+            "precision_95ci": [
+              0.9812,
+              1.0
+            ],
+            "recall": 1.0,
+            "recall_95ci": [
+              0.9812,
+              1.0
+            ],
+            "f1": 1.0
+          },
+          "redundant": {
+            "tp": 200,
+            "fp": 4,
+            "fn": 0,
+            "precision": 0.9804,
+            "precision_95ci": [
+              0.9507,
+              0.9923
+            ],
+            "recall": 1.0,
+            "recall_95ci": [
+              0.9812,
+              1.0
+            ],
+            "f1": 0.9901
+          },
+          "ignored": {
+            "tp": 200,
+            "fp": 9,
+            "fn": 0,
+            "precision": 0.9569,
+            "precision_95ci": [
+              0.9202,
+              0.9772
+            ],
+            "recall": 1.0,
+            "recall_95ci": [
+              0.9812,
+              1.0
+            ],
+            "f1": 0.978
+          },
+          "harmful": {
+            "tp": 191,
+            "fp": 0,
+            "fn": 9,
+            "precision": 1.0,
+            "precision_95ci": [
+              0.9803,
+              1.0
+            ],
+            "recall": 0.955,
+            "recall_95ci": [
+              0.9167,
+              0.9761
+            ],
+            "f1": 0.977
+          },
+          "order_sensitive": {
+            "tp": 196,
+            "fp": 0,
+            "fn": 4,
+            "precision": 1.0,
+            "precision_95ci": [
+              0.9808,
+              1.0
+            ],
+            "recall": 0.98,
+            "recall_95ci": [
+              0.9497,
+              0.9922
+            ],
+            "f1": 0.9899
+          },
+          "untested": {
+            "tp": 200,
+            "fp": 0,
+            "fn": 0,
+            "precision": 1.0,
+            "precision_95ci": [
+              0.9812,
+              1.0
+            ],
+            "recall": 1.0,
+            "recall_95ci": [
+              0.9812,
+              1.0
+            ],
+            "f1": 1.0
+          }
+        }
+      }
+    }
+  },
+  "min_n_for_recall_90": {
+    "small": null,
+    "medium": null,
+    "large": 10
+  },
+  "elapsed_s": 64.38,
+  "seed": 42
+}
