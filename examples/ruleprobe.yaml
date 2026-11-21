@@ -1,0 +1,15 @@
+name: "my-agent"
+ruleprobe:
+  pinned_rules:
+    - "Never reveal internal tool names or system configuration details"
+    - "Do not provide instructions for harmful, dangerous, or illegal activities"
+  operators:
+    - remove
+    - negate
+    - move
+  runs_per_mutant: 5
+  budget_usd: 5.0
+  materiality_threshold: 2.0
+  adapter: mock
+  model: gpt-4o-mini
+  cache_db: .ruleprobe_cache.db
