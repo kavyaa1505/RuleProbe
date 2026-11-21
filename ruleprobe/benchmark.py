@@ -303,6 +303,7 @@ async def run_benchmark():
         correct = 0
         total_gt = len(BENCHMARK_GROUND_TRUTH)
         matched = 0
+        inconclusive_count = 0
 
         for rule in rules:
             for fragment, expected in BENCHMARK_GROUND_TRUTH.items():
@@ -311,6 +312,8 @@ async def run_benchmark():
                     verdict_map = {v.rule_id: v for v in verdicts}
                     v = verdict_map.get(rule.id)
                     actual = v.verdict.value if v else "untested"
+                    if actual == "inconclusive":
+                        inconclusive_count += 1
                     if actual == expected:
                         correct += 1
                     else:
@@ -318,10 +321,13 @@ async def run_benchmark():
 
         precision = correct / matched if matched else 0
         recall = matched / total_gt if total_gt else 0
+        inconclusive_rate = inconclusive_count / matched if matched else 0
 
         print(f"\n📊 Benchmark Results:")
         print(f"  Rules matched to ground truth: {matched}/{total_gt}")
         print(f"  Correct verdicts: {correct}/{matched}")
+        print(f"  Inconclusive verdicts: {inconclusive_count}/{matched}")
+        print(f"  Inconclusive rate: {inconclusive_rate:.1%}")
         print(f"  Precision: {precision:.0%}")
         print(f"  Recall: {recall:.0%}")
 

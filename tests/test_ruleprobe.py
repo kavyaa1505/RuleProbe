@@ -241,16 +241,19 @@ class TestAnalyzer:
         rules = parser.parse(SAMPLE_PROMPT)
         rule = rules[0]
 
-        analyzer = RuleAnalyzer(materiality_threshold=2.0)
-        # Simulate: removing rule drops score by 20
+        analyzer = RuleAnalyzer(materiality_threshold=5.0)
+        # 10 scenarios: removing rule drops score by 20 points
+        baseline = {f"s{i}": [80.0] * 5 for i in range(10)}
+        mutant = {f"s{i}": [60.0] * 5 for i in range(10)}
         verdicts = analyzer.analyze(
             rules=rules,
-            baseline_scores={"s1": [80.0] * 10},
-            mutant_scores={"M_test": {"s1": [60.0] * 10}},
+            baseline_scores=baseline,
+            mutant_scores={"M_test": mutant},
             mutant_to_rule={"M_test": (rule.id, Operator.remove)},
         )
         assert len(verdicts) == 1
         assert verdicts[0].verdict == Verdict.load_bearing
+        assert verdicts[0].effect_size < -5.0
 
     def test_verdict_redundant(self):
         from ruleprobe.parser import InstructionParser
@@ -258,30 +261,106 @@ class TestAnalyzer:
         rules = parser.parse(SAMPLE_PROMPT)
         rule = rules[0]
 
-        analyzer = RuleAnalyzer(materiality_threshold=2.0)
-        # Removing rule doesn't change score → redundant
+        analyzer = RuleAnalyzer(materiality_threshold=5.0)
+        # Zero effect with narrow CI inside [-5, +5] -> redundant
+        baseline = {f"s{i}": [80.0] * 10 for i in range(10)}
+        mutant = {f"s{i}": [80.0] * 10 for i in range(10)}
         verdicts = analyzer.analyze(
             rules=rules,
-            baseline_scores={"s1": [80.0] * 10},
-            mutant_scores={"M_test": {"s1": [80.0] * 10}},
+            baseline_scores=baseline,
+            mutant_scores={"M_test": mutant},
             mutant_to_rule={"M_test": (rule.id, Operator.remove)},
         )
-        assert verdicts[0].verdict in (Verdict.redundant, Verdict.ignored, Verdict.untested)
+        assert len(verdicts) == 1
+        assert verdicts[0].verdict == Verdict.redundant
 
-    def test_pinned_rule_verdict(self):
+    def test_low_n_yields_inconclusive_not_redundant(self):
+        from ruleprobe.parser import InstructionParser
+        parser = InstructionParser()
+        rules = parser.parse(SAMPLE_PROMPT)
+        rule = rules[0]
+
+        analyzer = RuleAnalyzer(materiality_threshold=5.0)
+        # Low N (N=2) with binary variance: effect is 0, but CI width extends outside [-5, +5]
+        baseline = {f"s{i}": [100.0, 0.0] for i in range(5)}
+        mutant = {f"s{i}": [100.0, 0.0] for i in range(5)}
+        verdicts = analyzer.analyze(
+            rules=rules,
+            baseline_scores=baseline,
+            mutant_scores={"M_test": mutant},
+            mutant_to_rule={"M_test": (rule.id, Operator.remove)},
+        )
+        assert len(verdicts) == 1
+        # Crucial requirement: NEVER label such a rule redundant
+        assert verdicts[0].verdict == Verdict.inconclusive
+
+    def test_ci_width_shrinks_as_n_grows(self):
+        import numpy as np
+        from ruleprobe.analyzer import scenario_paired_bootstrap_ci
+        rng = np.random.default_rng(42)
+
+        # N = 3
+        b_small = {f"s{i}": list(rng.binomial(1, 0.8, size=3) * 100.0) for i in range(10)}
+        m_small = {f"s{i}": list(rng.binomial(1, 0.8, size=3) * 100.0) for i in range(10)}
+        _, low_small, high_small = scenario_paired_bootstrap_ci(b_small, m_small, n_boot=1000, seed=42)
+        ci_width_small = high_small - low_small
+
+        # N = 30
+        b_large = {f"s{i}": list(rng.binomial(1, 0.8, size=30) * 100.0) for i in range(10)}
+        m_large = {f"s{i}": list(rng.binomial(1, 0.8, size=30) * 100.0) for i in range(10)}
+        _, low_large, high_large = scenario_paired_bootstrap_ci(b_large, m_large, n_boot=1000, seed=42)
+        ci_width_large = high_large - low_large
+
+        assert ci_width_large < ci_width_small
+
+    def test_pinned_rules_never_removed(self):
         from ruleprobe.parser import InstructionParser
         parser = InstructionParser()
         rules = parser.parse(SAMPLE_PROMPT)
         rules[0].pinned = True
 
-        analyzer = RuleAnalyzer(materiality_threshold=2.0)
+        analyzer = RuleAnalyzer(materiality_threshold=5.0)
+        # Even with severe -50 drop, pinned rule verdict is pinned
+        baseline = {f"s{i}": [100.0] * 5 for i in range(5)}
+        mutant = {f"s{i}": [50.0] * 5 for i in range(5)}
         verdicts = analyzer.analyze(
             rules=rules,
-            baseline_scores={"s1": [80.0] * 10},
-            mutant_scores={"M_test": {"s1": [60.0] * 10}},
+            baseline_scores=baseline,
+            mutant_scores={"M_test": mutant},
             mutant_to_rule={"M_test": (rules[0].id, Operator.remove)},
         )
         assert verdicts[0].verdict == Verdict.pinned
+
+    def test_aa_null_per_experiment_fpr(self):
+        import numpy as np
+        from ruleprobe.parser import InstructionParser
+        parser = InstructionParser()
+        rules = parser.parse(SAMPLE_PROMPT)
+        analyzer = RuleAnalyzer(materiality_threshold=5.0, alpha=0.05)
+        rng = np.random.default_rng(42)
+
+        exp_flagged = 0
+        n_exp = 20
+        for _ in range(n_exp):
+            baseline = {f"s{i}": list(rng.binomial(1, 0.8, size=10) * 100.0) for i in range(10)}
+            mutant_scores = {}
+            mutant_to_rule = {}
+            for r in rules[:5]:
+                mid = f"M_{r.id}"
+                mutant_to_rule[mid] = (r.id, Operator.remove)
+                mutant_scores[mid] = {f"s{i}": list(rng.binomial(1, 0.8, size=10) * 100.0) for i in range(10)}
+
+            verdicts = analyzer.analyze(
+                rules=rules[:5],
+                baseline_scores=baseline,
+                mutant_scores=mutant_scores,
+                mutant_to_rule=mutant_to_rule,
+            )
+            if any(v.verdict in (Verdict.load_bearing, Verdict.harmful) for v in verdicts):
+                exp_flagged += 1
+
+        fpr = exp_flagged / n_exp
+        assert fpr <= 0.10
 
 
 # ---------------------------------------------------------------------------

@@ -24,6 +24,7 @@ class Verdict(str, Enum):
     untested = "untested"
     pinned = "pinned"
     unverified = "unverified"
+    inconclusive = "inconclusive"
 
 
 class Operator(str, Enum):
@@ -153,7 +154,7 @@ class ExperimentConfig(BaseModel):
     runs_per_mutant: int = 5
     budget_usd: float = 5.0
     concurrency: int = 5
-    materiality_threshold: float = 2.0
+    materiality_threshold: float = 5.0
     operators: list[Operator] = Field(default_factory=lambda: [Operator.remove, Operator.negate])
     pinned_rules: list[str] = Field(default_factory=list)
     cache_db: str = "ruleprobe_cache.db"
