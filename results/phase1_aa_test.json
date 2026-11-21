@@ -1,0 +1,154 @@
+{
+  "simulated": {
+    "n_iterations": 200,
+    "n_rules": 12,
+    "total_rules_tested": 2400,
+    "total_false_positives": 0,
+    "experiments_with_fp": 0,
+    "empirical_rule_fpr": 0.0,
+    "rule_fpr_95ci": [
+      0.0,
+      0.0016
+    ],
+    "family_wise_error_rate": 0.0,
+    "avg_noise_floor": 37.27,
+    "mean_raw_p": 0.6241,
+    "mean_adj_p": 0.8817,
+    "seed": 42
+  },
+  "real": {
+    "model": "nvidia/nemotron-3.5-lightning-30b-a3b",
+    "n_rules": 12,
+    "n_scenarios": 15,
+    "n_runs_per_group": 5,
+    "total_calls": 150,
+    "tokens_in": 28370,
+    "tokens_out": 129961,
+    "elapsed_s": 325.5,
+    "noise_floor": 40.0,
+    "n_flagged": 0,
+    "flagged_ids": [],
+    "verdicts": [
+      {
+        "rule_id": "R0_6702c1",
+        "text": "Always start the response with a polite ",
+        "effect_size": 1.33,
+        "ci_low": -10.7,
+        "ci_high": 14.67,
+        "p_value": 1.0,
+        "p_adj": 1.0,
+        "verdict": "redundant"
+      },
+      {
+        "rule_id": "R1_b76e68",
+        "text": "Keep the answer direct and avoid unneces",
+        "effect_size": 1.33,
+        "ci_low": -10.7,
+        "ci_high": 14.67,
+        "p_value": 1.0,
+        "p_adj": 1.0,
+        "verdict": "redundant"
+      },
+      {
+        "rule_id": "R2_570ea9",
+        "text": "Use markdown bullet points or numbered l",
+        "effect_size": 1.33,
+        "ci_low": -10.7,
+        "ci_high": 14.67,
+        "p_value": 1.0,
+        "p_adj": 1.0,
+        "verdict": "redundant"
+      },
+      {
+        "rule_id": "R3_0df468",
+        "text": "Use professional and respectful language",
+        "effect_size": 1.33,
+        "ci_low": -10.7,
+        "ci_high": 14.67,
+        "p_value": 1.0,
+        "p_adj": 1.0,
+        "verdict": "redundant"
+      },
+      {
+        "rule_id": "R4_c646a5",
+        "text": "Always state that information is based o",
+        "effect_size": 1.33,
+        "ci_low": -10.7,
+        "ci_high": 14.67,
+        "p_value": 1.0,
+        "p_adj": 1.0,
+        "verdict": "redundant"
+      },
+      {
+        "rule_id": "R5_4e1c03",
+        "text": "Avoid speculative claims when verifiable",
+        "effect_size": 1.33,
+        "ci_low": -10.7,
+        "ci_high": 14.67,
+        "p_value": 1.0,
+        "p_adj": 1.0,
+        "verdict": "redundant"
+      },
+      {
+        "rule_id": "R6_fece15",
+        "text": "Double-check mathematical calculations f",
+        "effect_size": 1.33,
+        "ci_low": -10.7,
+        "ci_high": 14.67,
+        "p_value": 1.0,
+        "p_adj": 1.0,
+        "verdict": "redundant"
+      },
+      {
+        "rule_id": "R7_c9c635",
+        "text": "State any key assumptions made before pr",
+        "effect_size": 1.33,
+        "ci_low": -10.7,
+        "ci_high": 14.67,
+        "p_value": 1.0,
+        "p_adj": 1.0,
+        "verdict": "redundant"
+      },
+      {
+        "rule_id": "R8_227454",
+        "text": "Do not include internal system details o",
+        "effect_size": 1.33,
+        "ci_low": -10.7,
+        "ci_high": 14.67,
+        "p_value": 1.0,
+        "p_adj": 1.0,
+        "verdict": "redundant"
+      },
+      {
+        "rule_id": "R9_8b2e85",
+        "text": "Decline requests that ask for illegal or",
+        "effect_size": 1.33,
+        "ci_low": -10.7,
+        "ci_high": 14.67,
+        "p_value": 1.0,
+        "p_adj": 1.0,
+        "verdict": "redundant"
+      },
+      {
+        "rule_id": "R10_72dd4e",
+        "text": "Format technical comparisons with struct",
+        "effect_size": 1.33,
+        "ci_low": -10.7,
+        "ci_high": 14.67,
+        "p_value": 1.0,
+        "p_adj": 1.0,
+        "verdict": "redundant"
+      },
+      {
+        "rule_id": "R11_454043",
+        "text": "End responses with a polite closing stat",
+        "effect_size": 1.33,
+        "ci_low": -10.7,
+        "ci_high": 14.67,
+        "p_value": 1.0,
+        "p_adj": 1.0,
+        "verdict": "redundant"
+      }
+    ]
+  }
+}

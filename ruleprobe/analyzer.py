@@ -35,11 +35,9 @@ def bootstrap_ci(
     effect = float(np.mean(m) - np.mean(b))
 
     rng = np.random.default_rng(42)
-    boot_diffs = []
-    for _ in range(n_boot):
-        b_sample = rng.choice(b, size=len(b), replace=True)
-        m_sample = rng.choice(m, size=len(m), replace=True)
-        boot_diffs.append(float(np.mean(m_sample) - np.mean(b_sample)))
+    b_sample = rng.choice(b, size=(n_boot, len(b)), replace=True)
+    m_sample = rng.choice(m, size=(n_boot, len(m)), replace=True)
+    boot_diffs = np.mean(m_sample, axis=1) - np.mean(b_sample, axis=1)
 
     ci_low = float(np.percentile(boot_diffs, 100 * alpha / 2))
     ci_high = float(np.percentile(boot_diffs, 100 * (1 - alpha / 2)))
@@ -58,16 +56,15 @@ def permutation_p_value(
     b = np.array(baseline_scores, dtype=float)
     m = np.array(mutant_scores, dtype=float)
     observed = abs(np.mean(m) - np.mean(b))
+    if observed < 1e-9:
+        return 1.0
 
     all_scores = np.concatenate([b, m])
     n_b = len(b)
     rng = np.random.default_rng(42)
-    count = 0
-    for _ in range(n_perms):
-        perm = rng.permutation(all_scores)
-        diff = abs(np.mean(perm[:n_b]) - np.mean(perm[n_b:]))
-        if diff >= observed:
-            count += 1
+    perms = np.array([rng.permutation(all_scores) for _ in range(n_perms)])
+    diffs = np.abs(np.mean(perms[:, :n_b], axis=1) - np.mean(perms[:, n_b:], axis=1))
+    count = int(np.sum(diffs >= observed - 1e-9))
     return (count + 1) / (n_perms + 1)
 
 
