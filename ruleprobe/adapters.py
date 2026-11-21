@@ -7,6 +7,7 @@ import hashlib
 import os
 import random
 import re
+import sys
 import time
 from dataclasses import dataclass, field
 from typing import Any, Protocol, runtime_checkable
@@ -203,7 +204,15 @@ class NvidiaAdapter:
         cost_per_1m_out: float = 0.80,
     ):
         self.model = model or os.environ.get("AGENT_MODEL", "nvidia/nemotron-3.5-lightning-30b-a3b")
-        self.api_key = api_key or os.environ.get("NVIDIA_API_KEY", "")
+        api_key = api_key or os.environ.get("NVIDIA_API_KEY", "")
+        if not api_key and sys.platform == "win32":
+            try:
+                import winreg
+                with winreg.OpenKey(winreg.HKEY_CURRENT_USER, r"Environment", 0, winreg.KEY_READ) as reg_key:
+                    api_key, _ = winreg.QueryValueEx(reg_key, "NVIDIA_API_KEY")
+            except Exception:
+                pass
+        self.api_key = api_key
         self.base_url = base_url or os.environ.get("NVIDIA_BASE_URL", "https://integrate.api.nvidia.com/v1")
         self.temperature = temperature
         self.max_tokens = max_tokens

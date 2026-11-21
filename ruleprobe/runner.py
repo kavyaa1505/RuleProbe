@@ -10,7 +10,7 @@ import time
 import uuid
 from typing import AsyncIterator, Callable
 
-from .adapters import AgentAdapter, AgentResult
+from .adapters import AgentAdapter, AgentResult, BudgetExceededError
 from .models import (
     ExperimentPlan,
     Mutant,
@@ -183,6 +183,16 @@ class ExperimentRunner:
                 await self._charge(result.cost)
                 return run
 
+            except BudgetExceededError as e:
+                logger.warning(f"Run stopped: {e}")
+                return Run(
+                    id=str(uuid.uuid4()),
+                    mutant_id=mutant.id,
+                    scenario_id=scenario.id,
+                    repeat_idx=repeat_idx,
+                    model=model,
+                    error="budget_exceeded",
+                )
             except Exception as e:
                 last_error = str(e)
                 wait = 2 ** attempt

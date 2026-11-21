@@ -1,0 +1,83 @@
+{
+  "simulated_aa_diagnostics": {
+    "n_experiments": 200,
+    "n_rules_per_exp": 12,
+    "total_rules_tested": 2400,
+    "avg_noise_floor": 37.27,
+    "noise_floor_range": [
+      22.47,
+      46.11
+    ],
+    "ks_test_uniform": {
+      "statistic": 0.2567,
+      "p_value": 6.670654787229114e-140
+    },
+    "p_value_histogram": {
+      "[0.0, 0.1]": 136,
+      "[0.1, 0.2]": 177,
+      "[0.2, 0.3]": 170,
+      "[0.3, 0.4]": 197,
+      "[0.4, 0.5]": 173,
+      "[0.5, 0.6]": 179,
+      "[0.6, 0.7]": 328,
+      "[0.7, 0.8]": 67,
+      "[0.8, 0.9]": 357,
+      "[0.9, 1.0]": 616
+    },
+    "with_noise_floor_gate": {
+      "per_experiment_fpr": 0.0,
+      "per_experiment_fpr_95ci": [
+        0.0,
+        0.0188
+      ],
+      "total_rules_flagged": 0,
+      "rule_level_fpr": 0.0
+    },
+    "without_noise_floor_gate": {
+      "per_experiment_fpr": 0.025,
+      "per_experiment_fpr_95ci": [
+        0.0107,
+        0.0572
+      ],
+      "total_rules_flagged": 5,
+      "rule_level_fpr": 0.0021
+    }
+  },
+  "real_model_resplit_diagnostics": {
+    "n_splits": 100,
+    "thinking_tokens_detected": false,
+    "avg_real_noise_floor": 41.86,
+    "with_noise_floor_gate": {
+      "per_experiment_fpr": 0.0,
+      "per_experiment_fpr_95ci": [
+        0.0,
+        0.037
+      ]
+    },
+    "without_noise_floor_gate": {
+      "per_experiment_fpr": 0.0,
+      "per_experiment_fpr_95ci": [
+        0.0,
+        0.037
+      ]
+    },
+    "sample_raw_outputs": [
+      "Hello! I'm here to assist you with a wide range of tasks, from answering questions and brainstorming ideas to coding, writing, and data analysis. My r",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "Hello! I'm here to assist you with questions, tasks, or discussions across a wide range of topics. Please feel free to share what you need help with. ",
+      "Hello! How can I help you today?\n\nI can assist you with a variety of tasks, such as:\n- Answering questions on general topics  \n- Helping with writing,",
+      "Hello! I'm here to assist you with a variety of tasks. I can help answer questions, brainstorm ideas, write or edit content, explain concepts, assist "
+    ]
+  },
+  "budget_exceeded_behavior": {
+    "planned_runs": 368,
+    "successful_runs": 6,
+    "errored_runs": 362,
+    "passed_partial_test": true
+  }
+}

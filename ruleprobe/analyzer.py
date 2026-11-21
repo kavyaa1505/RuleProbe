@@ -105,6 +105,20 @@ def compute_noise_floor(baseline_runs: list[tuple[Run, Score]]) -> float:
 class RuleAnalyzer:
     """
     Compares mutant runs against baseline, computes per-rule verdicts.
+
+    NOTE ON NOISE FLOOR (DIAGNOSTIC / DESIGN DOCUMENTATION):
+    - Formula: noise_floor = float(np.std(all_baseline)) where all_baseline is the
+      concatenated array of individual baseline trial scores across all scenarios.
+    - Unit: Percentage points on a 0-100 scale.
+    - Where used: In _assign_verdict():
+          material = abs(effect) > max(self.materiality_threshold, noise_floor)
+    - Current Behavior & Statistical Limitation:
+      When individual checks are binary (0.0 or 100.0) with typical pass rate p ~ 0.85,
+      the per-trial sample standard deviation is sigma = 100 * sqrt(p * (1 - p)) ~ 35.7 points.
+      Because this measures per-trial dispersion rather than the standard error of the mean
+      difference (which shrinks as sigma * sqrt(2/N)), using noise_floor as a hard threshold
+      means that real effects smaller than ~37 points are deemed 'not material' and suppressed,
+      even at large sample sizes (N=20).
     """
 
     def __init__(
