@@ -1,11 +1,21 @@
-# 🔬 RuleProbe: Mutation Testing for Agent Instructions
+<p align="center">
+  <img src="assets/logo.png" alt="RuleProbe Logo" width="320" style="border-radius: 16px;" />
+</p>
 
-[![Tests](https://img.shields.io/badge/tests-32%20passed-brightgreen.svg)]()
-[![Python](https://img.shields.io/badge/python-3.12%20%7C%203.14-blue.svg)]()
-[![Benchmark](https://img.shields.io/badge/benchmark%20recall-100%25-success.svg)]()
-[![License](https://img.shields.io/badge/license-MIT-green.svg)]()
+<h1 align="center">RuleProbe</h1>
+<p align="center"><strong>Mutation Testing for Agent Instructions: Attribute impact, detect dead weight & conflicts, and synthesize verified minimal prompts.</strong></p>
 
-> **"Mutation testing for agent instructions: finds which prompt rules matter, which are dead weight or conflicting, and produces a verified minimal prompt."**
+<p align="center">
+  <img src="https://img.shields.io/badge/tests-35%20passed-brightgreen.svg" alt="Tests" />
+  <img src="https://img.shields.io/badge/python-3.12%20%7C%203.14-blue.svg" alt="Python" />
+  <img src="https://img.shields.io/badge/benchmark%20recall-100%25-success.svg" alt="Benchmark" />
+  <img src="https://img.shields.io/badge/FPR%20(A%2FA)-1.0%25-brightgreen.svg" alt="False Positive Rate" />
+  <img src="https://img.shields.io/badge/license-MIT-green.svg" alt="License" />
+</p>
+
+---
+
+> **"Every production agent instruction file grows monotonically as teams patch failures. RuleProbe treats prompt files like source code and applies mutation testing to tell you which rules actually change agent behavior, which are dead weight, which conflict, and what an edit broke."**
 
 ---
 
@@ -116,11 +126,12 @@ uv run python -m ruleprobe.benchmark
 
 | Verdict | Meaning | Action |
 |---|---|---|
-| **`load_bearing`** | Removing it degrades behavior significantly ($p_{adj} < 0.05$, negative effect) | Keep and protect. |
-| **`redundant`** | Agent follows behavior, but removing the rule causes no regression | Safe to delete. |
+| **`load_bearing`** | Removing it degrades behavior significantly ($p_{adj} < 0.05$, $|\Delta| > m$) | Keep and protect. |
+| **`redundant`** | Agent follows behavior, and 95% CI is entirely within $[-m, +m]$ | Safe to delete. |
 | **`ignored`** | Agent ignores rule even when present; removing it changes nothing | Rewrite, move, or strengthen. |
 | **`harmful`** | Removing the rule improves agent compliance (indicates conflict) | Remove or resolve contradiction. |
 | **`order_sensitive`**| Moving rule to start/middle/end causes significant behavioral shifts | Fragile rule position. |
+| **`inconclusive`**| Effect is not statistically significant, but 95% CI extends beyond $\pm m$ | Collect more runs ($N$); do not remove. |
 | **`untested`** | No scenario exercises this rule | Coverage gap in scenario suite. |
 | **`pinned`** | Tagged as critical policy/safety rule | Excluded from minimization. |
 
@@ -141,4 +152,19 @@ Run the full test suite with pytest:
 ```bash
 uv run pytest tests/test_ruleprobe.py -v
 ```
-All 32 unit and integration tests cover parser heuristics, mutation operators, deterministic scorers, behavioral fingerprints, bootstrap CIs, FDR corrections, and end-to-end async execution.
+All 35 unit and integration tests cover parser heuristics, mutation operators, deterministic scorers, behavioral fingerprints, hierarchical bootstrap CIs, sign-flip permutation tests, FDR corrections, and end-to-end async execution.
+
+---
+
+## 8. Statistical Validation
+
+The statistical engine has been rigorously evaluated and calibrated under realistic stochastic noise and real LLM evaluations:
+- **Comprehensive Validation Report**: See [results/PHASE1-2-FIXED.md](results/PHASE1-2-FIXED.md) for full empirical power curves, analytical cross-checks against theoretical bounds, and before-and-after diagnostics.
+- **Controlled False-Positive Rate**:
+  - Simulated A/A (200 experiments $\times$ 12 rules): **1.00%** per-experiment FPR (95% CI: [0.27%, 3.57%]).
+  - Real-Model A/A (100 random 5/5 splits on live LLM runs): **2.00%** per-experiment FPR (95% CI: [0.55%, 7.00%]).
+- **Sample Size Guidelines**:
+  - $\Delta \ge 40\%$: $N = 5$ runs per scenario achieves $> 88\%$ power.
+  - $\Delta = 30\%$: $N = 10$ runs per scenario achieves $> 95\%$ power.
+  - $\Delta = 20\%$: $N = 20$ runs per scenario achieves $> 92\%$ power.
+  - $\Delta \le 10\%$: Undetectable under realistic budgets ($N \le 20$), appropriately categorized as `inconclusive` rather than falsely labeled redundant.
